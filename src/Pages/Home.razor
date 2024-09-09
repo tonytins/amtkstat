@@ -4,22 +4,26 @@
 
 <div class="container">
     <form class="row" @onsubmit="GreetAsync" @onsubmit:preventDefault="true">
-        <input id="greet-input" placeholder="Write in 3-character Station Code..." @bind="GreetInput" />
-        <button type="submit">Greet</button>
+        <input id="greet-input" placeholder="3-character Station Code" @bind="CodeInput" />
+        <button type="submit">Submit</button>
     </form>
-    <p>Status Maps by Dixieland Software</p>
+    <sub>
+        <i>
+            <p>Status Boards by Dixieland Software</p>
+        </i>
+    </sub>
 </div>
 
 @code
 {
-    private string? GreetInput { get; set; }
+    private string? CodeInput { get; set; }
 
-    private string? GreetMsg { get; set; }
+    private string? StationCode { get; set; }
 
     private async Task GreetAsync()
     {
-        GreetMsg = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "greet", new { name = GreetInput });
+        StationCode = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "greet", new { name = CodeInput });
 
-        NavigationManager.NavigateTo(GreetMsg);
+        NavigationManager.NavigateTo(StationCode);
     }
 }
