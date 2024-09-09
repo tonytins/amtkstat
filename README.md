@@ -4,6 +4,8 @@
 
 Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixieland Software's [station status boards](https://dixielandsoftware.net/Amtrak/solari/). 
 
+**WARNING: RESOLUTION IS LARGE.**
+
 ## Background
 
 This was intended to solve a rather awkward dilemma. While I much prefer PWAs, I used to have a bunch of standalone web apps for stations that I view on Virtual Railfan. This front-end was intended to solve that dilemma by accessing all stations from a single application using a modern, cleaner interface.

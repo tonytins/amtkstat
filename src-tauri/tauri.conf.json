@@ -21,10 +21,9 @@
     "windows": [
       {
         "title": "Amtrak Status Boards",
-        "fullscreen": false,
         "resizable": true,
-        "width": 1400,
-        "height": 768
+        "width": 1450,
+        "height": 950
       }
     ],
     "security": {
@@ -33,7 +32,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tpaw.amtk",
+      "identifier": "com.tpaw.amtkstat",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
