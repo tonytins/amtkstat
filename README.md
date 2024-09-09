@@ -1,5 +1,7 @@
 # Amtrak Status Boards
 
+<img title="" src="./assets/icon.png" alt="" data-align="center" width="270">
+
 Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixieland Software's [station status boards](https://dixielandsoftware.net/Amtrak/solari/). 
 
 ## Background
