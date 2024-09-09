@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager
 
 <div class="container">
+    <img src="img/amtkstat.svg" class="logo" alt="Amtrak Status" />
     <form class="row" @onsubmit="GreetAsync" @onsubmit:preventDefault="true">
         <input id="greet-input" placeholder="3-character Station Code" @bind="CodeInput" />
         <button type="submit">Submit</button>
