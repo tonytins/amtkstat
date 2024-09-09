@@ -1,0 +1,46 @@
+{
+  "build": {
+    "beforeDevCommand": "dotnet watch run --project src/AmtrakStatus.csproj",
+    "beforeBuildCommand": "dotnet publish -c release src/AmtrakStatus.csproj -o dist",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist/wwwroot",
+    "withGlobalTauri": true
+  },
+  "package": {
+    "productName": "AMTK Status",
+    "version": "0.1.100"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      }
+    },
+    "windows": [
+      {
+        "title": "Amtrak Status Boards",
+        "fullscreen": false,
+        "resizable": true,
+        "width": 1400,
+        "height": 768
+      }
+    ],
+    "security": {
+      "csp": null
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.tpaw.amtk",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ]
+    }
+  }
+}

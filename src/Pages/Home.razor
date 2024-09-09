@@ -1,0 +1,25 @@
+﻿@page "/"
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<div class="container">
+    <form class="row" @onsubmit="GreetAsync" @onsubmit:preventDefault="true">
+        <input id="greet-input" placeholder="Write in 3-character Station Code..." @bind="GreetInput" />
+        <button type="submit">Greet</button>
+    </form>
+    <p>Status Maps by Dixieland Software</p>
+</div>
+
+@code
+{
+    private string? GreetInput { get; set; }
+
+    private string? GreetMsg { get; set; }
+
+    private async Task GreetAsync()
+    {
+        GreetMsg = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "greet", new { name = GreetInput });
+
+        NavigationManager.NavigateTo(GreetMsg);
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "dotnet build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/AmtrakStatus.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "dotnet publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/src/AmtrakStatus.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "dotnet watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/src/AmtrakStatus.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "cargo",
+            "command": "tauri",
+            "isBackground": true,
+            "args": [
+                "dev"
+            ],
+            "group": "build",
+            "label": "tauri dev"
+        },
+        {
+            "type": "cargo",
+            "command": "tauri",
+            "isBackground": true,
+            "args": [
+                "build"
+            ],
+            "group": "build",
+            "label": "tauri build"
+        }
+    ]
+}
