@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "AMTK Status",
-    "version": "0.1.101"
+    "version": "0.1.102"
   },
   "tauri": {
     "allowlist": {
@@ -22,8 +22,12 @@
       {
         "title": "Amtrak Status Boards",
         "resizable": true,
-        "width": 1450,
-        "height": 950
+        "width": 1100,
+        "height": 768,
+        "minWidth": 1100,
+        "minHeight": 768,
+        "maxWidth": 1450,
+        "maxHeight": 950
       }
     ],
     "security": {

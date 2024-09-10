@@ -4,7 +4,7 @@
 
 <div class="container">
     <img src="img/amtkstat.svg" class="logo" alt="Amtrak Status" />
-    <form class="row" @onsubmit="GreetAsync" @onsubmit:preventDefault="true">
+    <form class="row" @onsubmit="StationAsync" @onsubmit:preventDefault="true">
         <input id="greet-input" placeholder="3-character Station Code" @bind="CodeInput" />
         <button type="submit">Submit</button>
     </form>
@@ -21,9 +21,9 @@
 
     private string? StationCode { get; set; }
 
-    private async Task GreetAsync()
+    private async Task StationAsync()
     {
-        StationCode = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "greet", new { name = CodeInput });
+        StationCode = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = CodeInput });
 
         NavigationManager.NavigateTo(StationCode);
     }
