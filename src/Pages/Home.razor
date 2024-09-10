@@ -8,12 +8,38 @@
         <input id="greet-input" placeholder="3-character Station Code" @bind="CodeInput" />
         <button type="submit">Submit</button>
     </form>
+    <div class="row">
+        <div class="container">
+            <button @onclick="PennStation">NY Penn Station</button>
+        </div>
+        <div class="container">
+            <button @onclick="UnionStation">DC Union Station</button>
+        </div>
+        <div class="container">
+            <button @onclick="BostonSouth">Boston South Station</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <button @onclick="AshlandVA">Ashland, VA</button>
+            <button @onclick="SanJuanCA">San Juan Capistrano, CA</button>
+            <button @onclick="FortMadisonIA">Fort Madison, IA</button>
+        </div>
+        <div class="container">
+            <button @onclick="LaPltaMO">La Plata, MO</button>
+            <button @onclick="QuincyIL">Quincy, IL</button>
+            <button @onclick="SpartanburgSC">Spartanburg, SC</button>
+        </div>
+    </div>
+</div>
+
+<footer>
     <sub>
         <i>
             <p>Status Boards by Dixieland Software</p>
         </i>
     </sub>
-</div>
+</footer>
 
 @code
 {
@@ -21,10 +47,65 @@
 
     private string? StationCode { get; set; }
 
-    private async Task StationAsync()
+    private async Task RedirectToStat(string code)
     {
-        StationCode = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = CodeInput });
+        StationCode = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = code });
 
         NavigationManager.NavigateTo(StationCode);
+    }
+
+    private async Task SanJuanCA()
+    {
+        await RedirectToStat("SNC");
+    }
+
+    private async Task AshlandVA()
+    {
+        await RedirectToStat("ASD");
+    }
+
+    private async Task LaPltaMO()
+    {
+        await RedirectToStat("LAP");
+    }
+
+    private async Task FortMadisonIA()
+    {
+        await RedirectToStat("FMD");
+    }
+
+    private async Task FlagstaffAZ()
+    {
+        await RedirectToStat("FLG");
+    }
+
+    private async Task QuincyIL()
+    {
+        await RedirectToStat("QCY");
+    }
+
+    private async Task PennStation()
+    {
+        await RedirectToStat("NYP");
+    }
+
+    private async Task UnionStation()
+    {
+        await RedirectToStat("WAS");
+    }
+
+    private async Task BostonSouth()
+    {
+        await RedirectToStat("BOS");
+    }
+
+    private async Task SpartanburgSC()
+    {
+        await RedirectToStat("SPB");
+    }
+
+    private async Task StationAsync()
+    {
+        await RedirectToStat(CodeInput!);
     }
 }

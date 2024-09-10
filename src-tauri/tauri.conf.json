@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "AMTK Status",
-    "version": "0.1.102"
+    "version": "0.1.104"
   },
   "tauri": {
     "allowlist": {

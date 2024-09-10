@@ -28,15 +28,16 @@ footer {
   text-align: center;
 }
 
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: 0.75s;
-}
-
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
 }
 
 .row {
@@ -74,6 +75,7 @@ button {
 
 button {
   cursor: pointer;
+  margin: 5px;
 }
 
 button:hover {
@@ -88,10 +90,6 @@ button:active {
 input,
 button {
   outline: none;
-}
-
-#greet-input {
-  margin-right: 5px;
 }
 
 @media (prefers-color-scheme: dark) {
