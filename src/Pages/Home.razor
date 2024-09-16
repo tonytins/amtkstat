@@ -10,25 +10,25 @@
     </form>
     <div class="row">
         <div class="container">
-            <button @onclick="PennStation">NY Penn Station</button>
+            <StationBtn Code="NYP" Station="NY Penn Station" />
         </div>
         <div class="container">
-            <button @onclick="UnionStation">DC Union Station</button>
+            <StationBtn Code="WAS" Station="DC Union Station" />
         </div>
         <div class="container">
-            <button @onclick="BostonSouth">Boston South Station</button>
+            <StationBtn Code="BOS" Station="Boston South Station" />
         </div>
     </div>
     <div class="row">
         <div class="container">
-            <button @onclick="AshlandVA">Ashland, VA</button>
-            <button @onclick="SanJuanCA">San Juan Capistrano, CA</button>
-            <button @onclick="FortMadisonIA">Fort Madison, IA</button>
+            <StationBtn Code="ASD" Station="Ashland, VA" />
+            <StationBtn Code="SNC" Station="San Juan Capistrano, CA" />
+            <StationBtn Code="FMD" Station="Fort Madison, IA" />
         </div>
         <div class="container">
-            <button @onclick="LaPltaMO">La Plata, MO</button>
-            <button @onclick="QuincyIL">Quincy, IL</button>
-            <button @onclick="SpartanburgSC">Spartanburg, SC</button>
+            <StationBtn Code="LAP" Station="La Plata, MO" />
+            <StationBtn Code="QCY" Station="Quincy, IL" />
+            <StationBtn Code="SPB" Station="Spartanburg, SC" />
         </div>
     </div>
 </div>
@@ -68,57 +68,6 @@
 
         NavigationManager.NavigateTo(StationCode);
     }
-
-    private async Task SanJuanCA()
-    {
-        await RedirectToStat("SNC");
-    }
-
-    private async Task AshlandVA()
-    {
-        await RedirectToStat("ASD");
-    }
-
-    private async Task LaPltaMO()
-    {
-        await RedirectToStat("LAP");
-    }
-
-    private async Task FortMadisonIA()
-    {
-        await RedirectToStat("FMD");
-    }
-
-    private async Task FlagstaffAZ()
-    {
-        await RedirectToStat("FLG");
-    }
-
-    private async Task QuincyIL()
-    {
-        await RedirectToStat("QCY");
-    }
-
-    private async Task PennStation()
-    {
-        await RedirectToStat("NYP");
-    }
-
-    private async Task UnionStation()
-    {
-        await RedirectToStat("WAS");
-    }
-
-    private async Task BostonSouth()
-    {
-        await RedirectToStat("BOS");
-    }
-
-    private async Task SpartanburgSC()
-    {
-        await RedirectToStat("SPB");
-    }
-
     private async Task StationAsync()
     {
         await RedirectToStat(CodeInput!);
