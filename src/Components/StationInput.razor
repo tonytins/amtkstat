@@ -1,0 +1,20 @@
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<form class="row" @onsubmit="AddrRedirectAsync" @onsubmit:preventDefault="true">
+    <input id="greet-input" placeholder="3-character Station Code" @bind="CodeInput" />
+    <button type="submit">Submit</button>
+</form>
+
+@code
+{
+    private string? CodeInput { get; set; }
+
+
+    private async Task AddrRedirectAsync()
+    {
+        var address = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = CodeInput });
+
+        NavigationManager.NavigateTo(address);
+    }
+}

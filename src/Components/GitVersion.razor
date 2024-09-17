@@ -1,0 +1,19 @@
+@PrintVersion
+
+@code
+{
+    // Bit of a workaround until I get native version from Tauri.
+    // Regardless, it's useful for printing the commit hash alone.
+    private string PrintVersion
+    {
+        get
+        {
+            var major = ThisAssembly.Git.SemVer.Major;
+            var minor = ThisAssembly.Git.SemVer.Minor;
+            var patch = ThisAssembly.Git.SemVer.Patch;
+            var commit = ThisAssembly.Git.Commit;
+
+            return $"v{major}.{minor}.{patch}-{commit}";
+        }
+    }
+}

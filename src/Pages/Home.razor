@@ -1,34 +1,29 @@
 ﻿@page "/"
-@inject IJSRuntime JsRuntime
-@inject NavigationManager NavigationManager
 
 <div class="container">
     <img src="img/amtkstat.svg" class="logo" alt="Amtrak Status" />
-    <form class="row" @onsubmit="StationAsync" @onsubmit:preventDefault="true">
-        <input id="greet-input" placeholder="3-character Station Code" @bind="CodeInput" />
-        <button type="submit">Submit</button>
-    </form>
+    <StationInput />
     <div class="row">
         <div class="container">
-            <StationBtn Code="NYP" Station="NY Penn Station" />
+            <StationBtn Code="NYP" Name="NY Penn Station" />
         </div>
         <div class="container">
-            <StationBtn Code="WAS" Station="DC Union Station" />
+            <StationBtn Code="WAS" Name="DC Union Station" />
         </div>
         <div class="container">
-            <StationBtn Code="BOS" Station="Boston South Station" />
+            <StationBtn Code="BOS" Name="Boston South Station" />
         </div>
     </div>
     <div class="row">
         <div class="container">
-            <StationBtn Code="ASD" Station="Ashland, VA" />
-            <StationBtn Code="SNC" Station="San Juan Capistrano, CA" />
-            <StationBtn Code="FMD" Station="Fort Madison, IA" />
+            <StationBtn Code="ASD" Name="Ashland, VA" />
+            <StationBtn Code="SNC" Name="San Juan Capistrano, CA" />
+            <StationBtn Code="FMD" Name="Fort Madison, IA" />
         </div>
         <div class="container">
-            <StationBtn Code="LAP" Station="La Plata, MO" />
-            <StationBtn Code="QCY" Station="Quincy, IL" />
-            <StationBtn Code="SPB" Station="Spartanburg, SC" />
+            <StationBtn Code="LAP" Name="La Plata, MO" />
+            <StationBtn Code="QCY" Name="Quincy, IL" />
+            <StationBtn Code="SPB" Name="Spartanburg, SC" />
         </div>
     </div>
 </div>
@@ -36,40 +31,10 @@
 <footer>
     <sub>
         <i>
-            <p>@PrintVersion<br>Status Boards by Dixieland Software</p>
+            <p>
+                <GitVersion /><br>Status Boards by Dixieland Software
+            </p>
         </i>
     </sub>
 </footer>
 
-@code
-{
-    private string? CodeInput { get; set; }
-
-    private string? StationCode { get; set; }
-
-    // Bit of a workaround until I get native version from Tauri.
-    // Regardless, it's useful for printing the commit hash alone.
-    private string PrintVersion
-    {
-        get
-        {
-            var major = ThisAssembly.Git.SemVer.Major;
-            var minor = ThisAssembly.Git.SemVer.Minor;
-            var patch = ThisAssembly.Git.SemVer.Patch;
-            var commit = ThisAssembly.Git.Commit;
-
-            return $"v{major}.{minor}.{patch}-{commit}";
-        }
-    }
-
-    private async Task RedirectToStat(string code)
-    {
-        StationCode = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = code });
-
-        NavigationManager.NavigateTo(StationCode);
-    }
-    private async Task StationAsync()
-    {
-        await RedirectToStat(CodeInput!);
-    }
-}

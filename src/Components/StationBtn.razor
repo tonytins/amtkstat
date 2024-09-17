@@ -1,0 +1,18 @@
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<button @onclick="RedirectToStat">@Name</button>
+
+@code
+{
+    [Parameter] public string? Name { get; set; }
+
+    [Parameter] public string? Code { get; set; }
+
+    private async Task RedirectToStat()
+    {
+        var address = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = Code });
+
+        NavigationManager.NavigateTo(address);
+    }
+}
