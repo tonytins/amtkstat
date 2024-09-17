@@ -10,7 +10,6 @@
 {
     private string? CodeInput { get; set; }
 
-
     private async Task AddrRedirectAsync()
     {
         var address = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = CodeInput });
