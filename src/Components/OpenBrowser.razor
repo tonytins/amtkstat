@@ -1,0 +1,24 @@
+@inject IJSRuntime JsRuntime
+
+@if (IsButton)
+{
+    <button @onclick="OpenBrowserAsync">@Text</button>
+}
+else
+{
+    <a @onclick="OpenBrowserAsync">@Text</a>
+}
+
+@code {
+
+    [Parameter] public string? Text { get; set; }
+
+    [Parameter] public string? Address { get; set; }
+
+    [Parameter] public bool IsButton { get; set; }
+
+    private async Task OpenBrowserAsync()
+    {
+        await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "open_browser", new { address = Address });
+    }
+}

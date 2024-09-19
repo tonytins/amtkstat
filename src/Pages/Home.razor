@@ -1,43 +1,44 @@
 ﻿@page "/"
+<FluentLayout>
+    <FluentHeader>
+        <img src="img/amtkstat.svg" class="logo" alt="Amtrak Status" />
+    </FluentHeader>
+    <div class="container">
 
-<div class="container">
-    <img src="img/amtkstat.svg" class="logo" alt="Amtrak Status" />
-    <StationInput />
-    <p>Search
-        <LaunchBrowser Text="Station Codes" Address="https://dixielandsoftware.net/Amtrak/solari/StationSearch.html" />
-    </p>
-    <div class="row">
-        <div class="container">
-            <StationBtn Code="NYP" Name="NY Penn Station" />
+        <StationForm />
+        <div class="row">
+            <div class="container">
+                <StationBtn Code="NYP" Name="NY Penn Station" />
+            </div>
+            <div class="container">
+                <StationBtn Code="WAS" Name="DC Union Station" />
+            </div>
+            <div class="container">
+                <StationBtn Code="BOS" Name="Boston South Station" />
+            </div>
         </div>
-        <div class="container">
-            <StationBtn Code="WAS" Name="DC Union Station" />
-        </div>
-        <div class="container">
-            <StationBtn Code="BOS" Name="Boston South Station" />
+        <div class="row">
+            <div class="container">
+                <StationBtn Code="ASD" Name="Ashland, VA" />
+                <StationBtn Code="SNC" Name="San Juan Capistrano, CA" />
+                <StationBtn Code="FMD" Name="Fort Madison, IA" />
+            </div>
+            <div class="container">
+                <StationBtn Code="LAP" Name="La Plata, MO" />
+                <StationBtn Code="QCY" Name="Quincy, IL" />
+                <StationBtn Code="SPB" Name="Spartanburg, SC" />
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="container">
-            <StationBtn Code="ASD" Name="Ashland, VA" />
-            <StationBtn Code="SNC" Name="San Juan Capistrano, CA" />
-            <StationBtn Code="FMD" Name="Fort Madison, IA" />
-        </div>
-        <div class="container">
-            <StationBtn Code="LAP" Name="La Plata, MO" />
-            <StationBtn Code="QCY" Name="Quincy, IL" />
-            <StationBtn Code="SPB" Name="Spartanburg, SC" />
-        </div>
-    </div>
-</div>
 
-<footer>
-    <sub>
-        <i>
-            <p>
-                <GitVersion /><br>Status Boards by
-                <LaunchBrowser Text="Dixieland Software" Address="https://dixielandsoftware.net/" />
-            </p>
-        </i>
-    </sub>
-</footer>
+    <footer>
+        <sub>
+            <i>
+                <p>
+                    <GitVersion /><br>Status Boards by
+                    <OpenBrowser Text="Dixieland Software" Address="https://dixielandsoftware.net/" />
+                </p>
+            </i>
+        </sub>
+    </footer>
+</FluentLayout>
