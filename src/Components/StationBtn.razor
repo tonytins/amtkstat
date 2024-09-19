@@ -1,17 +1,21 @@
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 
-<button @onclick="RedirectToStat">@Name</button>
+<button @onclick="AddrRedirect">@Name</button>
 
 @code
 {
-    [Parameter] public string? Name { get; set; }
+    [Parameter]
+    [Required]
+    public string? Name { get; set; }
 
-    [Parameter] public string? Code { get; set; }
+    [Parameter]
+    [Required]
+    public string? Code { get; set; }
 
-    private async Task RedirectToStat()
+    private void AddrRedirect()
     {
-        var address = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = Code });
+        var address = $"https://dixielandsoftware.net/cgi-bin/solari_relay.pl?data={Code}";
 
         NavigationManager.NavigateTo(address);
     }

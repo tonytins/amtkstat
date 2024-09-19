@@ -1,18 +1,18 @@
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 
-<form class="row" @onsubmit="AddrRedirectAsync" @onsubmit:preventDefault="true">
-    <input id="greet-input" placeholder="3-character Station Code" @bind="CodeInput" />
+<form class="row" @onsubmit="AddrRedirect" @onsubmit:preventDefault="true">
+    <input id="greet-input" placeholder="3-character Station Code" @bind="Code" />
     <button type="submit">Submit</button>
 </form>
 
 @code
 {
-    private string? CodeInput { get; set; }
+    private string? Code { get; set; }
 
-    private async Task AddrRedirectAsync()
+    private void AddrRedirect()
     {
-        var address = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "station", new { name = CodeInput });
+        var address = $"https://dixielandsoftware.net/cgi-bin/solari_relay.pl?data={Code}";
 
         NavigationManager.NavigateTo(address);
     }
