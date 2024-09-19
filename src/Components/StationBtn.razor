@@ -1,17 +1,23 @@
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 
-<button @onclick="AddrRedirect">@Name</button>
+@if (IsLink)
+{
+    <a @onclick="AddrRedirect">@Name</a>
+}
+else
+{
+    <button @onclick="AddrRedirect">@Name</button>
+}
 
 @code
 {
-    [Parameter]
-    [Required]
-    public string? Name { get; set; }
+    [Parameter] public string? Name { get; set; }
+
+    [Parameter] public string? Code { get; set; }
 
     [Parameter]
-    [Required]
-    public string? Code { get; set; }
+    public bool IsLink { get; set; }
 
     private void AddrRedirect()
     {

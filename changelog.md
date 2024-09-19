@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.201.0
+
+- Completely redesigned the interface based on the Fluent Design System.
+
 ## 0.104.2
 
 - Clickable links that open the default broswer.
