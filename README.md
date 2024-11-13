@@ -19,7 +19,7 @@ Before you begin, ensure you have the latest versions of the following installed
 
 ## License
 
-I license this project under either the GPL-2.0 or the EUPL-1.2 license – your choice. See [LICENSE-GPL](LICNESE-GPL) or [LICENSE-EUPL](LICENSE-EUPL) for details.
+I license this project under either the GPL-3.0 or the EUPL-1.2 license – your choice. See [LICENSE-GPL](LICNESE-GPL) or [LICENSE-EUPL](LICENSE-EUPL) for details.
 
 ## Disclaimer
 
