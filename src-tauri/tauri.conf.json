@@ -2,22 +2,27 @@
   "build": {
     "beforeDevCommand": "dotnet watch run --project src/AmtrakStatus.csproj",
     "beforeBuildCommand": "dotnet publish -c release src/AmtrakStatus.csproj -o dist",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist/wwwroot",
-    "withGlobalTauri": true
+    "frontendDist": "../dist/wwwroot",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "AMTK Status",
-    "version": "0.201.0"
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "shell": {
-        "all": false,
-        "open": true
-      }
-    },
+  "productName": "AMTK Status",
+  "mainBinaryName": "AMTK Status",
+  "version": "0.201.0",
+  "identifier": "com.tpaw.amtkstat",
+  "plugins": {},
+  "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "title": "Amtrak Status",
@@ -32,18 +37,6 @@
     ],
     "security": {
       "csp": null
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "com.tpaw.amtkstat",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ]
     }
   }
 }

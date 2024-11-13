@@ -9,6 +9,7 @@ fn open_browser(address: &str) {
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![open_browser])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
