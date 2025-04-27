@@ -43,10 +43,10 @@ Before you begin, ensure you have the latest versions of the following installed
 
 This was intended to solve a rather awkward dilemma. I turned a bunch of online Amtrak status boards made by Dixieland Software into PWAs (standalone web apps) for stations that I viewed on Virtual Railfan. While it was convenient—don't get me wrong—I had to create a new web app for each station, and it became overwhelming to constantly switch between them all. This front-end was intended to solve that dilemma by accessing all stations from a single application using a modern, cleaner interface. The original icons found in this project's first commit were used for those PWAs.
 
-## License
+## 📄 License
 
 I license this project under either the GPL-3.0 or the EUPL-1.2 license – your choice. See [LICENSE-GPL](LICNESE-GPL) or [LICENSE-EUPL](LICENSE-EUPL) for details.
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 *This project is not in any way affiliated with Amtrak or Dixieland Software.*
