@@ -4,7 +4,7 @@ Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixie
 
 **WARNING: LARGE RESOLUTION.**
 
-## 🗓️ Support & Update Cycle
+## 🗓️ Update Cycle
 
 | Type         | Frequency            | Notes                                    |
 | ------------ | -------------------- | ---------------------------------------- |
@@ -20,7 +20,7 @@ Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixie
   * Critical vulnerabilities
   * Framework-breaking issue
 
-## 🛡️ Support Levels
+## 🛡️ Support
 
 * [ ] Active Support
 * [ ] Limited Support (Security patches only)
