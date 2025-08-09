@@ -12,21 +12,12 @@ Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixie
 | Patch Update | Monthly or as needed | Bug fixes, security updates              |
 | Major Update | As needed            | Framework upgrades, major refactors      |
 
-## 🧘 Sustainability Practices
-
-* 20% creative/recovery space built into development
-* Mandatory cooldowns after major launches (minimum 1 week)
-* Crisis Mode Activates if:
-  * Critical vulnerabilities
-  * Framework-breaking issue
-
 ## 🛡️ Support
 
-* [ ] Active Support
-* [ ] Limited Support (Security patches only)
-* [x] Maintenance Mode (Dependency-only updates)
-* [ ] Archived (No active work planned)
-
+- [x] Active Support
+- [ ] Limited Support (Security patches only)
+- [ ] Maintenance Mode (Dependency-only updates)
+- [ ] Archived (No active work planned)
 
 ## 🧰 Prerequisites
 
@@ -35,7 +26,7 @@ Before you begin, ensure you have the latest versions of the following installed
 - [Rust](https://www.rust-lang.org/tools/install)
 - [.NET 8.0](https://dotnet.microsoft.com/en-us/)
   - ASP.NET Workload (Windows)
-  - ``wasm-tools`` Workload (macOS/Linux)
+  - `wasm-tools` Workload (macOS/Linux)
 
 ## 📓 Project Notes
 
@@ -49,4 +40,4 @@ I license this project under either the GPL-3.0 or the EUPL-1.2 license – your
 
 ## ⚠️ Disclaimer
 
-*This project is not in any way affiliated with Amtrak or Dixieland Software.*
+_This project is not in any way affiliated with Amtrak or Dixieland Software._
