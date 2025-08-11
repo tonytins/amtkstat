@@ -18,8 +18,8 @@
   },
   "productName": "AMTK Status",
   "mainBinaryName": "AMTK Status",
-  "version": "0.201.0",
-  "identifier": "com.tpaw.amtkstat",
+  "version": "0.1.106",
+  "identifier": "com.tonybark.amtkstat",
   "plugins": {},
   "app": {
     "withGlobalTauri": true,

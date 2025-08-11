@@ -6,11 +6,24 @@ Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixie
 
 ## 🗓️ Update Cycle
 
-| Type         | Frequency            | Notes                                    |
-| ------------ | -------------------- | ---------------------------------------- |
-| Minor Update | Every 3–6 months     | Small enhancements, non-breaking changes |
-| Patch Update | Monthly or as needed | Bug fixes, security updates              |
-| Major Update | As needed            | Framework upgrades, major refactors      |
+| Type         | Frequency            |
+| ------------ | -------------------- |
+| Minor Update | Every 3–6 months     |
+| Patch Update | Monthly or as needed |
+| Major Update | As needed            |
+
+## 🖥️ Platform Support
+
+| Target  | Windows | macOS  | Linux |
+| ------- | ------- | ------ | ----- |
+| x86_64  | ✅      | ⚠️[^1] | ✅    |
+| aarch64 | ❌      | ✅     | ⚠️    |
+
+- ✅ Tier 1
+- ⚠️ Tier 2
+- ❌ Unsupported
+
+[^1]: [Rust 1.89](https://blog.rust-lang.org/2025/08/07/Rust-1.89.0/) downgrades AMD64 support after Apple and GitHub CI did the same.
 
 ## 🛡️ Support
 
@@ -32,7 +45,7 @@ Before you begin, ensure you have the latest versions of the following installed
 
 ### 🔍 Background
 
-This was intended to solve a rather awkward dilemma. I turned a bunch of online Amtrak status boards made by Dixieland Software into PWAs (standalone web apps) for stations that I viewed on Virtual Railfan. While it was convenient—don't get me wrong—I had to create a new web app for each station, and it became overwhelming to constantly switch between them all. This front-end was intended to solve that dilemma by accessing all stations from a single application using a modern, cleaner interface. The original icons found in this project's first commit were used for those PWAs.
+This was intended to solve a rather awkward dilemma. I turned a bunch of online Amtrak status boards made by Dixieland Software into PWAs (standalone web apps) for stations that I viewed on Virtual Railfan. While it was convenient (don't get me wrong) I had to create a new web app for each station, and it became rather overwhelming to constantly switch between them all. This front-end was intended to solve that mini-crisis by accessing all stations from a single application using a modern, cleaner interface. The original icons found in this project's first commit were used for those PWAs.
 
 ## 📄 License
 
