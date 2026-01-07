@@ -1,6 +1,13 @@
 {
-  "dependencies": {
-    "@tauri-apps/cli": "^2.1.0",
-    "@tauri-apps/plugin-shell": "~2"
-  }
+	"name": "amtkstat",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"tauri": "tauri"
+	},
+	"devDependencies": {
+		"@tauri-apps/cli": "^2.1.0",
+		"@tauri-apps/plugin-shell": "~2"
+	}
 }

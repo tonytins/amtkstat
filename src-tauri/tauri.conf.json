@@ -1,42 +1,42 @@
 {
-  "build": {
-    "beforeDevCommand": "dotnet watch run --project src/AmtrakStatus.csproj",
-    "beforeBuildCommand": "dotnet publish -c release src/AmtrakStatus.csproj -o dist",
-    "frontendDist": "../dist/wwwroot",
-    "devUrl": "http://localhost:1420"
-  },
-  "bundle": {
-    "active": true,
-    "targets": "all",
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ]
-  },
-  "productName": "AMTK Status",
-  "mainBinaryName": "AMTK Status",
-  "version": "0.1.106",
-  "identifier": "com.tonybark.amtkstat",
-  "plugins": {},
-  "app": {
-    "withGlobalTauri": true,
-    "windows": [
-      {
-        "title": "Amtrak Status",
-        "resizable": true,
-        "width": 1100,
-        "height": 768,
-        "minWidth": 1100,
-        "minHeight": 768,
-        "maxWidth": 1450,
-        "maxHeight": 950
-      }
-    ],
-    "security": {
-      "csp": null
-    }
-  }
+	"build": {
+		"beforeDevCommand": "dotnet watch run --project src/AmtrakStatus.csproj",
+		"beforeBuildCommand": "dotnet publish -c release src/AmtrakStatus.csproj -o dist",
+		"frontendDist": "../dist/wwwroot",
+		"devUrl": "http://localhost:1420"
+	},
+	"bundle": {
+		"active": true,
+		"targets": "all",
+		"icon": [
+			"icons/32x32.png",
+			"icons/128x128.png",
+			"icons/128x128@2x.png",
+			"icons/icon.icns",
+			"icons/icon.ico"
+		]
+	},
+	"productName": "AMTK Status",
+	"mainBinaryName": "AMTK Status",
+	"version": "0.1.106",
+	"identifier": "com.tonybark.amtkstat",
+	"plugins": {},
+	"app": {
+		"withGlobalTauri": true,
+		"windows": [
+			{
+				"title": "Amtrak Status",
+				"resizable": true,
+				"width": 1100,
+				"height": 768,
+				"minWidth": 1100,
+				"minHeight": 768,
+				"maxWidth": 1450,
+				"maxHeight": 950
+			}
+		],
+		"security": {
+			"csp": null
+		}
+	}
 }

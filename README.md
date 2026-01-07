@@ -1,4 +1,4 @@
-<img title="" src="./assets/banner.svg" alt="" data-align="center" width="718">
+<img title="" src="assets/banner.svg" alt="" data-align="center" width="718">
 
 Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixieland Software's [station status boards](https://dixielandsoftware.net/Amtrak/solari/).
 
@@ -6,11 +6,11 @@ Amtrak Status Boards, or AMTK Status, is a desktop front-end for accessing Dixie
 
 ## 🗓️ Update Cycle
 
-| Type         | Frequency            |
-| ------------ | -------------------- |
-| Minor Update | Every 3–6 months     |
-| Patch Update | Monthly or as needed |
-| Major Update | As needed            |
+| Type  | Frequency            |
+| ----- | -------------------- |
+| Minor | Every 3–6 months     |
+| Patch | Monthly or as needed |
+| Major | As needed            |
 
 ## 🖥️ Platform Support
 
