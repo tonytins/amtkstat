@@ -29,7 +29,7 @@ struct ContentView: View {
 
             Table(rows) {
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
-                TableColumn("Number", value: \TrainStatusRow.routeName)
+                TableColumn("Route", value: \TrainStatusRow.routeName)
                 TableColumn("On Time", value: \TrainStatusRow.onTime)
                 TableColumn("Platform", value: \TrainStatusRow.platform)
 

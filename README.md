@@ -1,5 +1,7 @@
-<img title="" src="assets/banner.svg" alt="" data-align="center" width="718">
-          |
+<p align="center">
+    <img title="" src="assets/banner.svg" alt="" data-align="center" width="718">
+</p>
+          
 ## 🖥️ Supported Platforms
 
 | Platform | Minimum Version |
