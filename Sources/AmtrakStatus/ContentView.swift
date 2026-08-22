@@ -21,32 +21,28 @@ struct ContentView: View {
                     }
                 }.disabled(normalizedStationCode.isEmpty || isLoading)
             }.padding(10)
-            
+
             // Most popular Virtual Railfan stations
             HStack {
-                Button("Ashland, VA")
-                {
+                Button("Ashland, VA") {
                     Task {
                         await loadTrainStatus(forStationCode: "ASD")
                     }
                 }
-                
-                Button("San Juan Capistrano, CA")
-                {
+
+                Button("San Juan Capistrano, CA") {
                     Task {
                         await loadTrainStatus(forStationCode: "SNC")
                     }
                 }
-                
-                Button("La Plata, MO")
-                {
+
+                Button("La Plata, MO") {
                     Task {
                         await loadTrainStatus(forStationCode: "LAP")
                     }
                 }
             }
 
-        
             Table(rows) {
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
                 TableColumn("Route", value: \TrainStatusRow.routeName)
@@ -56,17 +52,18 @@ struct ContentView: View {
             }.overlay(alignment: .bottomTrailing) {
                 if isLoading {
                     ProgressView()
+                        .frame(alignment: .topTrailing)
                         .padding(10)
                 }
             }
-            
+
             HStack {
                 if let errorMessage {
                     Text(errorMessage)
                 }
             }.padding(10)
-            
-        }.padding()
+
+        }.frame(idealWidth: 500)
             .onAppear {
                 Task {
                     await loadTrainStatus(forStationCode: normalizedStationCode)
