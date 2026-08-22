@@ -9,7 +9,14 @@ struct ContentView: View {
     @State var errorMessage: String?
     
     var body: some View {
-        
+        HStack {
+            
+        }.padding()
+        .onAppear {
+            Task {
+                await loadTrainStatus(forStationCode: normalizedStationCode)
+            }
+        }
     }
     
     var normalizedStationCode: String {
@@ -27,7 +34,23 @@ struct ContentView: View {
         defer { isLoading = false }
         
         do {
+            let trainNumbers = try await client.fetchStationTrainNumbers(
+                stationCode: code
+            )
             
+            guard !trainNumbers.isEmpty else {
+                errorMessage = "Station \(code) has no trains listed right now"
+                rows = []
+                return
+            }
+            
+        } catch AmtrakError.stationNotFound(let code)
+        {
+            errorMessage = "Station \(code) not foudn"
+            rows = []
+        } catch {
+            errorMessage = "Couldn't load train status: \(error.localizedDescription)"
+            rows = []
         }
     }
 }
