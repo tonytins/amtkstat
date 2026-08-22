@@ -4,11 +4,11 @@
           
 ## 🖥️ Supported Platforms
 
-| Platform | Minimum Version |
-| --- | --- |
-| macOS | 13+ |
-| Windows | 10+ |
-| Linux | gtk 3+ |
+| Platform                     | Minimum Version |
+| ---------------------------- | --------------- |
+| macOS                        | 10.15+          |
+| Windows                      | 10+             |
+| Linux                        | gtk 3+          |
 
 ## 🔨 Setup
 

@@ -10,7 +10,6 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            // TODO: Add pre-selected options in the form of buttons like the original
             HStack {
                 Text("Station Code:")
                 TextField("e.g. ASD", text: $stationCode)
@@ -22,11 +21,32 @@ struct ContentView: View {
                     }
                 }.disabled(normalizedStationCode.isEmpty || isLoading)
             }.padding(10)
-
-            if let errorMessage {
-                Text(errorMessage).padding(10)
+            
+            // Most popular Virtual Railfan stations
+            HStack {
+                Button("Ashland, VA")
+                {
+                    Task {
+                        await loadTrainStatus(forStationCode: "ASD")
+                    }
+                }
+                
+                Button("San Juan Capistrano, CA")
+                {
+                    Task {
+                        await loadTrainStatus(forStationCode: "SNC")
+                    }
+                }
+                
+                Button("La Plata, MO")
+                {
+                    Task {
+                        await loadTrainStatus(forStationCode: "LAP")
+                    }
+                }
             }
 
+        
             Table(rows) {
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
                 TableColumn("Route", value: \TrainStatusRow.routeName)
@@ -39,6 +59,13 @@ struct ContentView: View {
                         .padding(10)
                 }
             }
+            
+            HStack {
+                if let errorMessage {
+                    Text(errorMessage)
+                }
+            }.padding(10)
+            
         }.padding()
             .onAppear {
                 Task {
@@ -67,7 +94,7 @@ struct ContentView: View {
             )
 
             guard !trainNumbers.isEmpty else {
-                errorMessage = "Station \(code) has no trains listed right now"
+                errorMessage = "\(code) has no trains listed right now"
                 rows = []
                 return
             }
@@ -93,7 +120,7 @@ struct ContentView: View {
             }
             rows = newRows
         } catch let AmtrakError.stationNotFound(code) {
-            errorMessage = "Station \(code) not foudn"
+            errorMessage = "Station \(code) not found"
             rows = []
         } catch {
             errorMessage = "Couldn't load train status: \(error.localizedDescription)"
