@@ -66,7 +66,9 @@ typealias TrainResponse = [String: [Train]]
 typealias StationResponse = [String: StationMeta]
 
 struct TrainStatusRow: Identifiable {
-    var id: String { trainID }
+    var id: String {
+        trainID
+    }
 
     var trainID: String
     var trainNum: String

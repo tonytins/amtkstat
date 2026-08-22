@@ -1,5 +1,5 @@
-import SwiftCrossUI
 import DefaultBackend
+import SwiftCrossUI
 
 @main
 struct AmtrakStatusApp: App {
