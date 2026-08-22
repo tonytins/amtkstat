@@ -28,7 +28,7 @@ swift-bundle run
 ### Bundling
 
 ```
-swift-bundle bundle -c (release|debug)
+swift-bundler bundle -c (release|debug)
 ```
 
 ## ⚖️ License
