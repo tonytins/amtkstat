@@ -1,14 +1,9 @@
 import SwiftCrossUI
+import Foundation
 
 extension Train {
-    var displayNumber: String {
-        let parts = trainID.split(separator: "-", maxSplits: 1)
-
-        guard parts.count <= 2 else {
-            return trainNum
-        }
-
-        return "\(trainNum) (\(parts[1]))"
+    var serviceDate: String {
+        AmtrakDateFormatting.date(from: createdAt) ?? "-"
     }
 }
 
@@ -19,6 +14,9 @@ struct ContentView: View {
     @State var rows: [TrainStatusRow] = []
     @State var isLoading = false
     @State var errorMessage: String?
+    @State var currentStation: String = ""
+    
+    let unknown = "Unknown"
 
     var body: some View {
         VStack {
@@ -56,11 +54,13 @@ struct ContentView: View {
             }
 
             Table(rows) {
+                TableColumn("Time", value: \TrainStatusRow.arrival)
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
-                TableColumn("Route", value: \TrainStatusRow.routeName)
-                TableColumn("Platform", value: \TrainStatusRow.platform)
-                TableColumn("Origin", value: \TrainStatusRow.origin)
-                TableColumn("Destination", value: \TrainStatusRow.destination)
+                TableColumn("Train", value: \TrainStatusRow.routeName)
+                TableColumn("To", value: \TrainStatusRow.origin)
+                TableColumn("From", value: \TrainStatusRow.destination)
+                TableColumn("Status", value: \TrainStatusRow.status)
+                TableColumn("Track", value: \TrainStatusRow.platform)
 
             }.overlay(alignment: .bottomTrailing) {
                 if isLoading {
@@ -73,6 +73,8 @@ struct ContentView: View {
             HStack {
                 if let errorMessage {
                     Text(errorMessage)
+                } else if !currentStation.isEmpty {
+                    Text(currentStation)
                 }
             }.padding(10)
         }
@@ -117,17 +119,7 @@ struct ContentView: View {
                         where: { $0.code == code
                         },
                     )?.platform
-
-                    newRows.append(TrainStatusRow(
-                        trainID: train.trainID,
-                        trainNum: train.displayNumber,
-                        routeName: train.routeName,
-                        origin: train.origName,
-                        destination: train.destName,
-                        platform: (
-                            platform?.isEmpty == false,
-                        ) ? platform! : "",
-                    ))
+                    newRows.append(trainStatus(for: train, atStationCode: code))
                 }
             }
 
@@ -140,5 +132,44 @@ struct ContentView: View {
             errorMessage = "Couldn't load train status: \(error.localizedDescription)"
             rows = []
         }
+    }
+    
+    func isOnTime(arr: String?, schArr: String?) -> String {
+        let amtrakDate = AmtrakDateFormatting()
+        
+        if AmtrakDateFormatting
+            .time(from: arr) != AmtrakDateFormatting
+            .time(from: schArr) {
+            return "Late"
+        }
+        
+        return "On Time"
+    }
+    
+    func trainStatus(for train: Train, atStationCode code: String) -> TrainStatusRow {
+        let leg = train.stations?.first { $0.code == code }
+        let platform = leg?.platform ?? "-"
+        let stationName = leg?.name ?? unknown
+        let arrival = AmtrakDateFormatting.time(from: leg?.arr) ?? AmtrakDateFormatting.time(
+            from: leg?.schArr
+        )
+        let depature = AmtrakDateFormatting.time(from: leg?.dep) ?? AmtrakDateFormatting.time(
+            from: leg?.schDep
+        )
+        
+        currentStation = "\(stationName) station"
+        
+        return TrainStatusRow(
+            trainID: train.trainID,
+            trainNum: train.trainNum,
+            routeName: train.routeName,
+            status: isOnTime(arr: leg?.arr, schArr: leg?.schArr),
+            platform: leg?.platform ?? "",
+            arrival: arrival ?? "",
+            departure: depature ?? "",
+            origin: train.origName,
+            destination: train.destName,
+            // serviceDate: train.serviceDate
+        )
     }
 }

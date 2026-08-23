@@ -25,6 +25,12 @@ enum StationStatus: String, Codable, Sendable {
     case station = "Station"
     case departed = "Departed"
     case unknown = "Unknown"
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self = StationStatus(rawValue: rawValue) ?? .unknown
+    }
 }
 
 struct Train: Codable {
@@ -83,12 +89,6 @@ struct StaleData: Codable {
 typealias TrainResponse = [String: [Train]]
 typealias StationResponse = [String: StationMeta]
 
-struct AmtrakDateFormatting {
-    let isoFormatter = ISO8601DateFormatter()
-    
-    
-}
-
 struct TrainStatusRow: Identifiable {
     var id: String {
         trainID
@@ -96,12 +96,12 @@ struct TrainStatusRow: Identifiable {
     
     var trainID: String
     var trainNum: String
-    var originating: String
     var routeName: String
+    var status: String
     var platform: String
     var arrival: String
     var departure: String
     var origin: String
-    var syatus: String
     var destination: String
+    // var serviceDate: String
 }
