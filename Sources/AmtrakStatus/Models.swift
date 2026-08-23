@@ -4,9 +4,27 @@ struct TrainAlert: Codable {
     var message: String
 }
 
-struct Station: Codable {
+struct Station: Codable, Sendable {
+    var name: String
     var code: String
-    var platform: String?
+    var tz: String
+    var bus: Bool
+    var schArr: String
+    var schDep: String
+    var arr: String
+    var dep: String
+    var arrCmnt: String
+    var depCmnt: String
+    var status: StationStatus
+    var stopIconColor: String
+    var platform: String
+}
+
+enum StationStatus: String, Codable, Sendable {
+    case enroute = "Enroute"
+    case station = "Station"
+    case departed = "Departed"
+    case unknown = "Unknown"
 }
 
 struct Train: Codable {
@@ -65,15 +83,25 @@ struct StaleData: Codable {
 typealias TrainResponse = [String: [Train]]
 typealias StationResponse = [String: StationMeta]
 
+struct AmtrakDateFormatting {
+    let isoFormatter = ISO8601DateFormatter()
+    
+    
+}
+
 struct TrainStatusRow: Identifiable {
     var id: String {
         trainID
     }
-
+    
     var trainID: String
     var trainNum: String
+    var originating: String
     var routeName: String
-    var origin: String
-    var destination: String
     var platform: String
+    var arrival: String
+    var departure: String
+    var origin: String
+    var syatus: String
+    var destination: String
 }
