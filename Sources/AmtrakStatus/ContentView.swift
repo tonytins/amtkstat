@@ -1,5 +1,17 @@
 import SwiftCrossUI
 
+extension Train {
+    var displayNumber: String {
+        let parts = trainID.split(separator: "-", maxSplits: 1)
+
+        guard parts.count <= 2 else {
+            return trainNum
+        }
+
+        return "\(trainNum) (\(parts[1]))"
+    }
+}
+
 struct ContentView: View {
     @State var client = AmtrakClient()
 
@@ -46,8 +58,9 @@ struct ContentView: View {
             Table(rows) {
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
                 TableColumn("Route", value: \TrainStatusRow.routeName)
-                TableColumn("On Time", value: \TrainStatusRow.onTime)
                 TableColumn("Platform", value: \TrainStatusRow.platform)
+                TableColumn("Origin", value: \TrainStatusRow.origin)
+                TableColumn("Destination", value: \TrainStatusRow.destination)
 
             }.overlay(alignment: .bottomTrailing) {
                 if isLoading {
@@ -62,13 +75,13 @@ struct ContentView: View {
                     Text(errorMessage)
                 }
             }.padding(10)
-
-        }.frame(idealWidth: 500)
-            .onAppear {
-                Task {
-                    await loadTrainStatus(forStationCode: normalizedStationCode)
-                }
+        }
+        .frame(idealWidth: 500)
+        .onAppear {
+            Task {
+                await loadTrainStatus(forStationCode: normalizedStationCode)
             }
+        }
     }
 
     var normalizedStationCode: String {
@@ -104,18 +117,22 @@ struct ContentView: View {
                         where: { $0.code == code
                         },
                     )?.platform
+
                     newRows.append(TrainStatusRow(
                         trainID: train.trainID,
-                        trainNum: train.trainNum,
+                        trainNum: train.displayNumber,
                         routeName: train.routeName,
-                        onTime: train.trainTimely.isEmpty ? "" : train.trainTimely,
+                        origin: train.origName,
+                        destination: train.destName,
                         platform: (
                             platform?.isEmpty == false,
                         ) ? platform! : "",
                     ))
                 }
             }
+
             rows = newRows
+
         } catch let AmtrakError.stationNotFound(code) {
             errorMessage = "Station \(code) not found"
             rows = []

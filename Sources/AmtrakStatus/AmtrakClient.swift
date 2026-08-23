@@ -36,7 +36,10 @@ struct AmtrakClient {
     }
 
     func trainNumber(fromTrainId trainId: String) -> String {
-        trainId.split(separator: "-").first.map(String.init) ?? trainId
+        trainId
+            .split(separator: "-")
+            .first
+            .map(String.init) ?? trainId
     }
 
     func fetchStationTrainNumbers(stationCode code: String) async throws -> [String] {

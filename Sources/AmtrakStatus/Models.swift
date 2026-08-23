@@ -12,11 +12,11 @@ struct Station: Codable {
 struct Train: Codable {
     var routeName: String
     var trainNum: String
-    var trainNumRaw: String
+    var trainNumRaw: String?
     var trainID: String
-    var lat: Double
-    var lon: Double
-    var trainTimely: String
+    var lat: Double?
+    var lon: Double?
+    var trainTimely: String?
     var iconColor: String?
     var textColor: String?
     var heading: String?
@@ -24,9 +24,9 @@ struct Train: Codable {
     var eventTZ: String?
     var eventName: String?
     var origCode: String?
-    var origName: String?
+    var origName: String
     var destCode: String?
-    var destName: String?
+    var destName: String
     var trainState: String?
     var velocity: Double?
     var statusMsg: String?
@@ -73,6 +73,7 @@ struct TrainStatusRow: Identifiable {
     var trainID: String
     var trainNum: String
     var routeName: String
-    var onTime: String
+    var origin: String
+    var destination: String
     var platform: String
 }
