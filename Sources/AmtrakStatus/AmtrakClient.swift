@@ -7,6 +7,12 @@ enum AmtrakError: Error {
     case stationNotFound(String)
 }
 
+
+struct TrainStationLookUp: Sendable {
+    var trainNumbers: [String]
+    var timeZone: TimeZone?
+}
+
 struct AmtrakClient {
     var decoder = JSONDecoder()
 
@@ -41,15 +47,21 @@ struct AmtrakClient {
             .first
             .map(String.init) ?? trainId
     }
+    
 
-    func fetchStationTrainNumbers(stationCode code: String) async throws -> [String] {
+    func trainStationLookup(stationCode code: String) async throws -> TrainStationLookUp {
         let reponse = try await fetchStation(code: code)
 
         guard let meta = reponse[code] else {
             throw AmtrakError.stationNotFound(code)
         }
-
-        return Array(Set(meta.trains.map(trainNumber(fromTrainId:))))
+        
+        let trainNumbers = Array(Set(meta.trains.map(trainNumber(fromTrainId:))))
+        let timeZone = meta.tz.flatMap(TimeZone.init(identifier:))
+        return TrainStationLookUp(
+            trainNumbers: trainNumbers,
+            timeZone: timeZone
+        )
     }
 
     func get<T: Decodable>(_ urlString: String) async throws -> T {

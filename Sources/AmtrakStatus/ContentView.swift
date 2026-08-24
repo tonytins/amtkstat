@@ -24,7 +24,7 @@ struct ContentView: View {
                     Task {
                         await loadTrainStatus(forStationCode: normalizedStationCode)
                     }
-                }.disabled(normalizedStationCode.isEmpty || isLoading)
+                }.disabled(normalizedStationCode.isEmpty)
             }.padding(10)
 
             // Most popular Virtual Railfan stations
@@ -103,6 +103,12 @@ struct ContentView: View {
             return .white
         }
     }
+    
+    func loadStationStatus(forStationCode code: String) async {
+        guard !code.isEmpty else {
+            return
+        }
+    }
 
     func loadTrainStatus(forStationCode code: String) async {
         guard !code.isEmpty else {
@@ -115,25 +121,32 @@ struct ContentView: View {
         defer { isLoading = false }
 
         do {
-            let trainNumbers = try await client.fetchStationTrainNumbers(
+            let lookup = try await client.trainStationLookup(
                 stationCode: code,
             )
 
-            guard !trainNumbers.isEmpty else {
+            guard !lookup.trainNumbers.isEmpty else {
                 errorMessage = "\(code) has no trains listed right now"
                 rows = []
                 return
             }
 
             var newRows: [TrainStatusRow] = []
-            for number in trainNumbers {
+            for number in lookup.trainNumbers {
                 let trains = try await client.fetchAllTrainStatus(num: number)
                 for train in trains {
                     let platform = train.stations?.first(
                         where: { $0.code == code
                         },
                     )?.platform
-                    newRows.append(trainStatus(for: train, atStationCode: code))
+                    newRows
+                        .append(
+                            trainStatus(
+                                for: train,
+                                atStationCode: code,
+                                timeZone: lookup.timeZone
+                            )
+                        )
                 }
             }
 
@@ -170,18 +183,16 @@ struct ContentView: View {
         }
     }
     
-    func trainStatus(for train: Train, atStationCode code: String) -> TrainStatusRow {
+    func trainStatus(for train: Train, atStationCode code: String, timeZone: TimeZone?) -> TrainStatusRow {
         let leg = train.stations?.first { $0.code == code }
         let amtrakDate = AmtrakDateFormatting()
         let stationName = leg?.name ?? unknown
-        let arrival = amtrakDate.time(from: leg?.arr) ?? amtrakDate.time(
-            from: leg?.schArr
-        )
-        let depature = amtrakDate.time(from: leg?.dep) ?? amtrakDate.time(
-            from: leg?.schDep
-        )
-        
-        currentStation = "\(stationName) station"
+        let arrival = amtrakDate.time(from: leg?.arr, timeZone: timeZone) ?? amtrakDate.time(
+            from: leg?.schArr,
+            timeZone: timeZone)
+        let depature = amtrakDate.time(from: leg?.dep, timeZone: timeZone) ?? amtrakDate.time(
+            from: leg?.schDep,
+            timeZone: timeZone)
         
         return TrainStatusRow(
             trainID: train.trainID,
