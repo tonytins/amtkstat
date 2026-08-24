@@ -54,7 +54,15 @@ struct ContentView: View {
                 TableColumn("Train", value: \TrainStatusRow.routeName)
                 TableColumn("To", value: \TrainStatusRow.origin)
                 TableColumn("From", value: \TrainStatusRow.destination)
-                TableColumn("Status", value: \TrainStatusRow.status)
+                TableColumn("Status") {
+                    (row: TrainStatusRow) in
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 0)
+                            .fill(row.status.color)
+                        Text(row.status.descrption)
+                            .foregroundColor(Color.white)
+                    }
+                }
                 TableColumn("Track", value: \TrainStatusRow.platform)
             }.frame(minWidth: 600)
             .overlay(alignment: .bottomTrailing) {
@@ -129,28 +137,25 @@ struct ContentView: View {
         }
     }
     
-    func isOnTime(arr: String?, schArr: String?) -> String {
+    func isOnTime(arr: String?, schArr: String?) -> TrainLateness {
         let amtrakDate = AmtrakDateFormatting()
         
         guard
             let actualDate = amtrakDate.parsedDate(from: arr),
             let scheduledDate = amtrakDate.parsedDate(from: schArr)
         else {
-            return "On Time"
+            return .unknown
         }
         
         let differenceInMinutes = Int(actualDate.timeIntervalSince(scheduledDate) / 60)
         
         switch differenceInMinutes {
         case -1...1:
-            return "On Time"
+            return .onTime
         case ..<0:
-            return "\(-differenceInMinutes) min early"
-        case 0..<60:
-            return "\(differenceInMinutes) min late"
+            return .early(minutes: -differenceInMinutes)
         default:
-            let hours = differenceInMinutes / 60
-            return "\(hours) hr late"
+            return .late(minutes: differenceInMinutes)
         }
     }
     

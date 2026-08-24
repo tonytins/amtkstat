@@ -97,7 +97,7 @@ struct TrainStatusRow: Identifiable {
     var trainID: String
     var trainNum: String
     var routeName: String
-    var status: String
+    var status: TrainLateness
     var platform: String
     var arrival: String
     var departure: String
