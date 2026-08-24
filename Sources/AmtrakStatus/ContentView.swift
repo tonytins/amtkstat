@@ -194,6 +194,8 @@ struct ContentView: View {
             from: leg?.schDep,
             timeZone: timeZone)
         
+        currentStation = "\(stationName) station"
+        
         return TrainStatusRow(
             trainID: train.trainID,
             trainNum: train.trainNum,
