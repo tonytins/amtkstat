@@ -1,11 +1,6 @@
 import SwiftCrossUI
 import Foundation
 
-extension Train {
-    var serviceDate: String {
-        AmtrakDateFormatting.date(from: createdAt) ?? "-"
-    }
-}
 
 struct ContentView: View {
     @State var client = AmtrakClient()
@@ -137,23 +132,36 @@ struct ContentView: View {
     func isOnTime(arr: String?, schArr: String?) -> String {
         let amtrakDate = AmtrakDateFormatting()
         
-        if AmtrakDateFormatting
-            .time(from: arr) != AmtrakDateFormatting
-            .time(from: schArr) {
-            return "Late"
+        guard
+            let actualDate = amtrakDate.parsedDate(from: arr),
+            let scheduledDate = amtrakDate.parsedDate(from: schArr)
+        else {
+            return "On Time"
         }
         
-        return "On Time"
+        let differenceInMinutes = Int(actualDate.timeIntervalSince(scheduledDate) / 60)
+        
+        switch differenceInMinutes {
+        case -1...1:
+            return "On Time"
+        case ..<0:
+            return "\(-differenceInMinutes) min early"
+        case 0..<60:
+            return "\(differenceInMinutes) min late"
+        default:
+            let hours = differenceInMinutes / 60
+            return "\(hours) hr late"
+        }
     }
     
     func trainStatus(for train: Train, atStationCode code: String) -> TrainStatusRow {
         let leg = train.stations?.first { $0.code == code }
-        let platform = leg?.platform ?? "-"
+        let amtrakDate = AmtrakDateFormatting()
         let stationName = leg?.name ?? unknown
-        let arrival = AmtrakDateFormatting.time(from: leg?.arr) ?? AmtrakDateFormatting.time(
+        let arrival = amtrakDate.time(from: leg?.arr) ?? amtrakDate.time(
             from: leg?.schArr
         )
-        let depature = AmtrakDateFormatting.time(from: leg?.dep) ?? AmtrakDateFormatting.time(
+        let depature = amtrakDate.time(from: leg?.dep) ?? amtrakDate.time(
             from: leg?.schDep
         )
         
