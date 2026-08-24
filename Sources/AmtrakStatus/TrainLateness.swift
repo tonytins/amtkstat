@@ -40,6 +40,6 @@ enum TrainLateness {
         guard hours > 0 else {
             return "\(minutes) mins"
         }
-        return "\(hours) hr late"
+        return "\(hours) hrs"
     }
 }
