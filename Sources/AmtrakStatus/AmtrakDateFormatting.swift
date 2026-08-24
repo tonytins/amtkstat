@@ -35,6 +35,17 @@ struct AmtrakDateFormatting {
         return timeFormatter.string(from: date)
     }
     
+    func localTime(timeZone: TimeZone?) -> String {
+        let now = Date()
+        timeFormatter.timeZone = timeZone
+        return timeFormatter.string(from: now)
+    }
+    
+    func updateTime(timeZone: TimeZone?) {
+        let now = Date()
+        timeFormatter.timeZone = timeZone
+    }
+    
     func date(from isoString: String?) -> String? {
         guard let isoString, !isoString.isEmpty, let date = isoFormatter.date(
             from: isoString) else {

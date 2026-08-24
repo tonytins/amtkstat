@@ -10,7 +10,9 @@ struct ContentView: View {
     @State var isLoading = false
     @State var errorMessage: String?
     @State var currentStation: String = ""
+    @State var localTimeZone: TimeZone?
     
+    let amtrakDate = AmtrakDateFormatting()
     let unknown = "Unknown"
 
     var body: some View {
@@ -79,7 +81,9 @@ struct ContentView: View {
                 if let errorMessage {
                     Text(errorMessage)
                 } else if !currentStation.isEmpty {
-                    Text(currentStation)
+                    Text(
+                        "It is \(amtrakDate.localTime(timeZone: localTimeZone)) at \(currentStation) station"
+                    )
                 }
             }.padding(10)
         }
@@ -162,8 +166,7 @@ struct ContentView: View {
     }
     
     func isOnTime(arr: String?, schArr: String?) -> TrainLateness {
-        let amtrakDate = AmtrakDateFormatting()
-        
+       
         guard
             let actualDate = amtrakDate.parsedDate(from: arr),
             let scheduledDate = amtrakDate.parsedDate(from: schArr)
@@ -185,7 +188,6 @@ struct ContentView: View {
     
     func trainStatus(for train: Train, atStationCode code: String, timeZone: TimeZone?) -> TrainStatusRow {
         let leg = train.stations?.first { $0.code == code }
-        let amtrakDate = AmtrakDateFormatting()
         let stationName = leg?.name ?? unknown
         let arrival = amtrakDate.time(from: leg?.arr, timeZone: timeZone) ?? amtrakDate.time(
             from: leg?.schArr,
@@ -194,7 +196,8 @@ struct ContentView: View {
             from: leg?.schDep,
             timeZone: timeZone)
         
-        currentStation = "\(stationName) station"
+        currentStation = stationName
+        localTimeZone = timeZone
         
         return TrainStatusRow(
             trainID: train.trainID,
