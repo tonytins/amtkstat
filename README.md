@@ -1,5 +1,6 @@
 <p align="center">
-    <img title="" src="assets/banner.svg" alt="" data-align="center" width="718">
+    <img title="" src="assets/banner.svg" alt="" data-align="center" width="80%">
+    <img title="" src="assets/screenshot.png" alt="" data-align="center" width="70%">
 </p>
           
 ## 🖥️ Supported Platforms
