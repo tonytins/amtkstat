@@ -60,7 +60,9 @@ struct ContentView: View {
                         RoundedRectangle(cornerRadius: 0)
                             .fill(row.status.color)
                         Text(row.status.descrption)
-                            .foregroundColor(Color.white)
+                            .foregroundColor(
+                                statusColour(row.status.color)
+                            )
                     }
                 }
                 TableColumn("Track", value: \TrainStatusRow.platform)
@@ -91,6 +93,15 @@ struct ContentView: View {
 
     var normalizedStationCode: String {
         stationCode.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+    }
+    
+    func statusColour(_ color: Color) -> Color {
+        switch color {
+        case .green:
+            return .black
+        default:
+            return .white
+        }
     }
 
     func loadTrainStatus(forStationCode code: String) async {
