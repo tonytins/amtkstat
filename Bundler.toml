@@ -1,9 +1,9 @@
 format_version = 2
 
 [apps.AmtrakStatus]
-identifier = 'com.example.AmtrakStatus'
+identifier = 'com.tonybark.AmtrakStatus'
 product = 'AmtrakStatus'
-version = '0.1.0'
+version = '0.2.101'
 icon = "./assets/icon.png"
 
 
