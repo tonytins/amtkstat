@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.2.103
+
+- A new column after number has "Enroute," "Station," and "Departed" status. It's left blank since status is already taken.
+
 ## 0.2.102
 
 - The status bar at the bottom now shows ``It is <time> at <station> station``.

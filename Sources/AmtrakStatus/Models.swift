@@ -103,5 +103,5 @@ struct TrainStatusRow: Identifiable {
     var departure: String
     var origin: String
     var destination: String
-    // var serviceDate: String
+    var presence: StationStatus
 }

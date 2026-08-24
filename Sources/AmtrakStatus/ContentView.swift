@@ -53,6 +53,7 @@ struct ContentView: View {
             Table(rows) {
                 TableColumn("Time", value: \TrainStatusRow.arrival)
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
+                TableColumn("", value: \TrainStatusRow.presence.rawValue)
                 TableColumn("Train", value: \TrainStatusRow.routeName)
                 TableColumn("To", value: \TrainStatusRow.destination)
                 TableColumn("From", value: \TrainStatusRow.origin)
@@ -209,7 +210,7 @@ struct ContentView: View {
             departure: depature ?? "",
             origin: train.origName,
             destination: train.destName,
-            // serviceDate: train.serviceDate
+            presence: leg?.status ?? .unknown // Yeah... It's a little confusing
         )
     }
 }
