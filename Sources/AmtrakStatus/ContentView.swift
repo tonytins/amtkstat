@@ -51,12 +51,12 @@ struct ContentView: View {
             }
 
             Table(rows) {
-                TableColumn("Time", value: \TrainStatusRow.arrival)
+                TableColumn("Time", value: \TrainStatusRow.time)
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
                 TableColumn("", value: \TrainStatusRow.presence.rawValue)
-                TableColumn("Train", value: \TrainStatusRow.routeName)
-                TableColumn("To", value: \TrainStatusRow.destination)
-                TableColumn("From", value: \TrainStatusRow.origin)
+                TableColumn("Train", value: \TrainStatusRow.train)
+                TableColumn("To", value: \TrainStatusRow.to)
+                TableColumn("From", value: \TrainStatusRow.from)
                 TableColumn("Status") {
                     (row: TrainStatusRow) in
                     ZStack {
@@ -68,7 +68,7 @@ struct ContentView: View {
                             )
                     }
                 }
-                TableColumn("Track", value: \TrainStatusRow.platform)
+                TableColumn("Track", value: \TrainStatusRow.track)
             }.frame(minWidth: 600)
             .overlay(alignment: .bottomTrailing) {
                 if isLoading {
@@ -135,6 +135,8 @@ struct ContentView: View {
                 rows = []
                 return
             }
+            
+            var zoneCache: [String: TimeZone?] = [code: lookup.timeZone]
 
             var newRows: [TrainStatusRow] = []
             for number in lookup.trainNumbers {
@@ -144,12 +146,13 @@ struct ContentView: View {
                         where: { $0.code == code
                         },
                     )?.platform
-                    newRows
+                    await newRows
                         .append(
                             trainStatus(
                                 for: train,
                                 atStationCode: code,
-                                timeZone: lookup.timeZone
+                                timeZone: lookup.timeZone,
+                                zoneCache: &zoneCache
                             )
                         )
                 }
@@ -187,30 +190,65 @@ struct ContentView: View {
         }
     }
     
-    func trainStatus(for train: Train, atStationCode code: String, timeZone: TimeZone?) -> TrainStatusRow {
+    func trainStatus(
+        for train: Train,
+        atStationCode code: String,
+        timeZone: TimeZone?,
+        zoneCache: inout [String: TimeZone?]
+    ) async -> TrainStatusRow {
         let leg = train.stations?.first { $0.code == code }
         let stationName = leg?.name ?? unknown
-        let arrival = amtrakDate.time(from: leg?.arr, timeZone: timeZone) ?? amtrakDate.time(
+        let track = leg?.platform ?? ""
+        
+        var originZone: TimeZone?
+        if let orgCode = train.origCode {
+            originZone = await fetchTimeZone(
+                forStationCode: orgCode,
+                cache: &zoneCache
+            )
+        }
+        
+        let time = amtrakDate.time(
+            from: leg?.arr,
+            timeZone: timeZone,
+            relativeTo: originZone
+        ) ?? amtrakDate.time(
             from: leg?.schArr,
-            timeZone: timeZone)
-        let depature = amtrakDate.time(from: leg?.dep, timeZone: timeZone) ?? amtrakDate.time(
-            from: leg?.schDep,
-            timeZone: timeZone)
+            timeZone: timeZone,
+            relativeTo: originZone
+        )
         
         currentStation = stationName
         localTimeZone = timeZone
         
         return TrainStatusRow(
             trainID: train.trainID,
+            time: time ?? "",
             trainNum: train.trainNum,
-            routeName: train.routeName,
-            status: isOnTime(arr: leg?.arr, schArr: leg?.schArr),
-            platform: leg?.platform ?? "",
-            arrival: arrival ?? "",
-            departure: depature ?? "",
-            origin: train.origName,
-            destination: train.destName,
-            presence: leg?.status ?? .unknown // Yeah... It's a little confusing
+            presence: leg?.status ?? .unknown, // Yeah... It's a little confusing
+            train: train.routeName,
+            to: train.destName,
+            from: train.origName,
+            status: isOnTime(
+                arr: leg?.arr,
+                schArr: leg?.schArr
+            ),
+            track: track.isEmpty ? "" : track
         )
+    }
+    
+    func fetchTimeZone(forStationCode code: String, cache: inout [String: TimeZone?]) async -> TimeZone? {
+        if let cached = cache[code] {
+            return cached
+        }
+        let zone: TimeZone?
+        do {
+            let response = try await client.fetchStation(code: code)
+            zone = response[code]?.tz.flatMap(TimeZone.init(identifier:))
+        } catch {
+            zone = nil
+        }
+        
+        return zone
     }
 }

@@ -90,18 +90,15 @@ typealias TrainResponse = [String: [Train]]
 typealias StationResponse = [String: StationMeta]
 
 struct TrainStatusRow: Identifiable {
-    var id: String {
-        trainID
-    }
+    var id: String { trainID }
     
     var trainID: String
+    var time: String
     var trainNum: String
-    var routeName: String
-    var status: TrainLateness
-    var platform: String
-    var arrival: String
-    var departure: String
-    var origin: String
-    var destination: String
     var presence: StationStatus
+    var train: String
+    var to: String
+    var from: String
+    var status: TrainLateness
+    var track: String
 }

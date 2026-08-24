@@ -26,13 +26,26 @@ struct AmtrakDateFormatting {
         return isoFormatter.date(from: isoString)
     }
     
-    func time(from isoString: String?, timeZone: TimeZone? = nil) -> String? {
+    func time(from isoString: String?, timeZone: TimeZone?, relativeTo otherZone: TimeZone? = nil) -> String? {
         guard let isoString, !isoString.isEmpty, let date = isoFormatter.date(
             from: isoString) else {
             return nil
             }
+        
         timeFormatter.timeZone = timeZone
-        return timeFormatter.string(from: date)
+        
+        let formatted = timeFormatter.string(from: date)
+        
+        guard
+            let timeZone,
+            let otherZone,
+            timeZone.identifier != otherZone.identifier,
+            let abbreviation = timeZone.abbreviation(for: date)
+        else {
+            return formatted
+        }
+        
+        return "\(formatted) \(abbreviation)"
     }
     
     func localTime(timeZone: TimeZone?) -> String {
