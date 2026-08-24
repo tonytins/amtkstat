@@ -8,7 +8,7 @@
 | Platform                     | Minimum Version |
 | ---------------------------- | --------------- |
 | macOS                        | 10.15+          |
-| Windows                      | 10+             |
+| Windows                      | 11+             |
 | Linux                        | gtk 3+          |
 
 ## 🔨 Setup
