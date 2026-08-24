@@ -25,7 +25,7 @@ struct ContentView: View {
                 TextField("e.g. ASD", text: $stationCode)
                     .frame(width: 100)
 
-                Button("Refresh") {
+                Button("Submit") {
                     Task {
                         await loadTrainStatus(forStationCode: normalizedStationCode)
                     }
@@ -61,8 +61,8 @@ struct ContentView: View {
                 TableColumn("From", value: \TrainStatusRow.destination)
                 TableColumn("Status", value: \TrainStatusRow.status)
                 TableColumn("Track", value: \TrainStatusRow.platform)
-
-            }.overlay(alignment: .bottomTrailing) {
+            }.frame(minWidth: 600)
+            .overlay(alignment: .bottomTrailing) {
                 if isLoading {
                     ProgressView()
                         .frame(alignment: .topTrailing)
