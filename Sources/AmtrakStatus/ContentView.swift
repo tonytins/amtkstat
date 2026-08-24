@@ -52,8 +52,8 @@ struct ContentView: View {
                 TableColumn("Time", value: \TrainStatusRow.arrival)
                 TableColumn("Number", value: \TrainStatusRow.trainNum)
                 TableColumn("Train", value: \TrainStatusRow.routeName)
-                TableColumn("To", value: \TrainStatusRow.origin)
-                TableColumn("From", value: \TrainStatusRow.destination)
+                TableColumn("To", value: \TrainStatusRow.destination)
+                TableColumn("From", value: \TrainStatusRow.origin)
                 TableColumn("Status") {
                     (row: TrainStatusRow) in
                     ZStack {
