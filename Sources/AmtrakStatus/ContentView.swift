@@ -169,27 +169,6 @@ struct ContentView: View {
         }
     }
     
-    func isOnTime(arr: String?, schArr: String?) -> TrainLateness {
-       
-        guard
-            let actualDate = amtrakDate.parsedDate(from: arr),
-            let scheduledDate = amtrakDate.parsedDate(from: schArr)
-        else {
-            return .unknown
-        }
-        
-        let differenceInMinutes = Int(actualDate.timeIntervalSince(scheduledDate) / 60)
-        
-        switch differenceInMinutes {
-        case -1...1:
-            return .onTime
-        case ..<0:
-            return .early(minutes: -differenceInMinutes)
-        default:
-            return .late(minutes: differenceInMinutes)
-        }
-    }
-    
     func trainStatus(
         for train: Train,
         atStationCode code: String,
@@ -210,12 +189,12 @@ struct ContentView: View {
         
         let time = amtrakDate.time(
             from: leg?.arr,
-            timeZone: timeZone,
-            relativeTo: originZone
+            in: timeZone,
+            comparedTo: originZone
         ) ?? amtrakDate.time(
             from: leg?.schArr,
-            timeZone: timeZone,
-            relativeTo: originZone
+            in: timeZone,
+            comparedTo: originZone
         )
         
         currentStation = stationName
@@ -229,9 +208,9 @@ struct ContentView: View {
             train: train.routeName,
             to: train.destName,
             from: train.origName,
-            status: isOnTime(
-                arr: leg?.arr,
-                schArr: leg?.schArr
+            status: amtrakDate.isOnTime(
+                actual: leg?.arr,
+                scheduled: leg?.schArr
             ),
             track: track.isEmpty ? "" : track
         )

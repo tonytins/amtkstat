@@ -26,27 +26,50 @@ struct AmtrakDateFormatting {
         return isoFormatter.date(from: isoString)
     }
     
-    func time(from isoString: String?, timeZone: TimeZone?, relativeTo otherZone: TimeZone? = nil) -> String? {
+    func time(from isoString: String?, in zone: TimeZone?, comparedTo originZone: TimeZone? = nil) -> String? {
         guard let isoString, !isoString.isEmpty, let date = isoFormatter.date(
             from: isoString) else {
             return nil
             }
         
-        timeFormatter.timeZone = timeZone
+        timeFormatter.timeZone = zone
         
         let formatted = timeFormatter.string(from: date)
         
         guard
-            let timeZone,
-            let otherZone,
-            timeZone.identifier != otherZone.identifier,
-            let abbreviation = timeZone.abbreviation(for: date)
+            let zone,
+            let originZone,
+            zone.identifier != originZone.identifier,
+            let abbreviation = zone.abbreviation(for: date)
         else {
             return formatted
         }
         
         return "\(formatted) \(abbreviation)"
     }
+    
+    
+    func isOnTime(actual: String?, scheduled: String?) -> TrainLateness {
+        
+        guard
+            let actualDate = parsedDate(from: actual),
+            let scheduledDate = parsedDate(from: scheduled)
+        else {
+            return .unknown
+        }
+        
+        let differenceInMinutes = Int(actualDate.timeIntervalSince(scheduledDate) / 60)
+        
+        switch differenceInMinutes {
+        case -1...1:
+            return .onTime
+        case ..<0:
+            return .early(minutes: -differenceInMinutes)
+        default:
+            return .late(minutes: differenceInMinutes)
+        }
+    }
+    
     
     func localTime(timeZone: TimeZone?) -> String {
         let now = Date()

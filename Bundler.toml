@@ -1,3 +1,4 @@
+# https://swiftbundler.dev/documentation/swift-bundler/configuration
 format_version = 2
 
 [apps.AmtrakStatus]
@@ -5,6 +6,7 @@ identifier = 'com.tonybark.AmtrakStatus'
 product = 'AmtrakStatus'
 version = '0.2.103'
 icon = "./assets/icon.png"
+category = "public.app-category.travel"
 
 
 [[apps.AmtrakStatus.overlays]]
