@@ -38,7 +38,7 @@ This was intended to solve a rather awkward dilemma. I turned a bunch of online 
 
 So I created simple frontend that mapped to Dixieland Software's API using Tauri. You could type in simple station code and it'd take you their status board from within the app. Simple, right? Unfortunately, I didn't know how to get it go back to change the station, my attempted UI redesigns kept failing, and I accidentally botched a migration to Tauri 2.0. I'm just not that good with Node.
 
-So it sat abandoned until I discovered [SwiftCrossUI](https://github.com/moreSwift/swift-cross-ui). Now it directly makes use of [Amtraker](https://amtraker.com/)'s API.
+So it sat abandoned until I discovered [SwiftCrossUI](https://github.com/moreSwift/swift-cross-ui). Now it directly makes use of [Amtraker](https://amtraker.com/)'s API, based on models ported from [Amtrak.js](https://github.com/piemadd/amtrak).
 
 ## ⚖️ License
 

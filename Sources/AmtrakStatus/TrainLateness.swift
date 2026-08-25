@@ -33,13 +33,17 @@ enum TrainLateness {
         }
     }
     
-    
     static func formatted(_  minutes: Int) -> String {
         let hours = minutes / 60
         let remainder = minutes % 60
+    
+        let minutesPart = "\(minutes) \(minutes.pluralized(singular: "min", plural: "mins"))"
+        let hoursPart = "\(hours) \(hours.pluralized(singular: "hr", plural: "hrs"))"
+        
         guard hours > 0 else {
-            return "\(minutes) mins"
+            return minutesPart
         }
-        return "\(hours) hrs"
+        
+        return hoursPart
     }
 }

@@ -103,7 +103,7 @@ struct ContentView: View {
     func statusColour(_ color: Color) -> Color {
         switch color {
         case .green:
-            return .black
+            return .adaptive(light: .white, dark: .black)
         default:
             return .white
         }
