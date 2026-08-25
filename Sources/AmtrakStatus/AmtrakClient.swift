@@ -27,6 +27,10 @@ struct AmtrakClient {
     func fetchAllTrains() async throws -> TrainResponse {
         try await get(trainsBaseURL)
     }
+    
+    func fetchStaleStatus() async throws -> StaleData {
+        try await get(staleBaseURL)
+    }
 
     func fetchAllTrainStatus(num trainNum: String) async throws -> [Train] {
         let reponse = try await fetchTrain(number: trainNum)

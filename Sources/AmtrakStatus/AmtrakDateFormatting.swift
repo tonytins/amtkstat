@@ -49,7 +49,7 @@ struct AmtrakDateFormatting {
     }
     
     
-    func isOnTime(actual: String?, scheduled: String?) -> TrainLateness {
+    func isOnTime(actual: String?, scheduled: String?) -> LateTrain {
         
         guard
             let actualDate = parsedDate(from: actual),

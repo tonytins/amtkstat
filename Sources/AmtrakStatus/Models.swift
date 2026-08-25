@@ -81,9 +81,15 @@ struct StationMeta: Codable {
 }
 
 struct StaleData: Codable {
-    var avgLastUpdate: Double
     var activeTrains: Int
-    var stale: Bool
+    var avgLastUpdate: Double
+    var lastUpdatedArr: [TrainFreshness]
+    var medianLastUpdate: Double
+}
+
+struct TrainFreshness: Codable, Sendable {
+    var trainID: String
+    var timeSince: Double
 }
 
 typealias TrainResponse = [String: [Train]]
@@ -99,6 +105,6 @@ struct TrainStatusRow: Identifiable {
     var train: String
     var to: String
     var from: String
-    var status: TrainLateness
+    var status: LateTrain
     var track: String
 }

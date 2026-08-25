@@ -1,7 +1,7 @@
 import Foundation
 import SwiftCrossUI
 
-enum TrainLateness {
+enum LateTrain {
     case onTime
     case early(minutes: Int)
     case late(minutes: Int)

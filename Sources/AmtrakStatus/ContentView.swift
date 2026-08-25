@@ -14,6 +14,7 @@ struct ContentView: View {
     
     let amtrakDate = AmtrakDateFormatting()
     let unknown = "Unknown"
+    let staleDataThreshold: TimeInterval = 60 * 60 * 24 // 24 hours
 
     var body: some View {
         VStack {
@@ -146,15 +147,15 @@ struct ContentView: View {
                         where: { $0.code == code
                         },
                     )?.platform
-                    await newRows
-                        .append(
-                            trainStatus(
+                    let row = await trainStatus(
                                 for: train,
-                                atStationCode: code,
-                                timeZone: lookup.timeZone,
-                                zoneCache: &zoneCache
+                                code: code,
+                                zone: lookup.timeZone,
+                                cache: &zoneCache
                             )
-                        )
+                    if let row {
+                        newRows.append(row)
+                    }
                 }
             }
 
@@ -171,11 +172,16 @@ struct ContentView: View {
     
     func trainStatus(
         for train: Train,
-        atStationCode code: String,
-        timeZone: TimeZone?,
-        zoneCache: inout [String: TimeZone?]
-    ) async -> TrainStatusRow {
-        let leg = train.stations?.first { $0.code == code }
+        code stationCode: String,
+        zone timeZone: TimeZone?,
+        cache zoneCache: inout [String: TimeZone?]
+    ) async -> TrainStatusRow? {
+        let leg = train.stations?.first { $0.code == stationCode }
+        
+        guard !isStale(leg, timeZone: timeZone) else {
+            return nil
+        }
+        
         let stationName = leg?.name ?? unknown
         let track = leg?.platform ?? ""
         
@@ -213,6 +219,45 @@ struct ContentView: View {
                 scheduled: leg?.schArr
             ),
             track: track.isEmpty ? "" : track
+        )
+    }
+    
+    func isStale(_ leg: Station?, timeZone: TimeZone?) -> Bool {
+        guard leg?.status == .departed else { return false }
+        
+        guard
+            let deparatureDate = amtrakDate.parsedDate(
+                from: leg?.dep
+            ) ?? amtrakDate.parsedDate(from: leg?.schDep)
+        else {
+            return false
+        }
+        
+        var calendar = Calendar.current
+        calendar.timeZone = timeZone ?? .current
+        return calendar
+            .compare(
+                deparatureDate,
+                to: Date(),
+                toGranularity: .day
+            ) == .orderedAscending
+    }
+    
+    func isDataStale(
+        _ trainId: String,
+        staleness: [String: TimeInterval]
+    ) -> Bool {
+        guard let timeSince = staleness[trainId] else { return false }
+        return timeSince > staleDataThreshold
+    }
+    
+    func staleTrainLookup() async ->  [String: TimeInterval] {
+        guard let staleData = try? await client.fetchStaleStatus() else {
+            return [:]
+        }
+        return Dictionary(
+            staleData.lastUpdatedArr.map { ( $0.trainID, $0.timeSince) },
+            uniquingKeysWith: { first, _ in first }
         )
     }
     
