@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.2.104
+
+- Client now checks for any stale trains that are 48 hours old.
+- Finally gave Amtraker credit.
+
 ## 0.2.103
 
 - A new column after number has "Enroute," "Station," and "Departed" status. It's left blank since status is already taken.

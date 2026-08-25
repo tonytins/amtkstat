@@ -14,7 +14,7 @@ struct ContentView: View {
     
     let amtrakDate = AmtrakDateFormatting()
     let unknown = "Unknown"
-    let staleDataThreshold: TimeInterval = 60 * 60 * 24 // 24 hours
+    let staleDataThreshold: TimeInterval = 60 * 60 * 48 // 48 hours
 
     var body: some View {
         VStack {
@@ -94,6 +94,9 @@ struct ContentView: View {
             Task {
                 await loadTrainStatus(forStationCode: normalizedStationCode)
             }
+        }.overlay(alignment: .topTrailing) {
+            Text("Information by Amtraker")
+                .padding(10)
         }
     }
 
@@ -182,8 +185,7 @@ struct ContentView: View {
         let leg = train.stations?.first { $0.code == stationCode }
         
         guard
-            !isStale(leg, timeZone: timeZone) &&
-            !isDataStale(train.trainID, staleness: staleness)
+            !isStale(leg, timeZone: timeZone), !isDataStale(train.trainID, staleness: staleness)
         else {
             return nil
         }
@@ -209,8 +211,10 @@ struct ContentView: View {
             comparedTo: originZone
         )
         
-        currentStation = stationName
-        localTimeZone = timeZone
+        if stationName != unknown {
+            currentStation = stationName
+            localTimeZone = timeZone
+        }
         
         return TrainStatusRow(
             trainID: train.trainID,
