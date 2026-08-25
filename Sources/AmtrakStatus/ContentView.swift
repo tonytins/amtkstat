@@ -138,6 +138,7 @@ struct ContentView: View {
             }
             
             var zoneCache: [String: TimeZone?] = [code: lookup.timeZone]
+            let staleness = await staleTrainLookup()
 
             var newRows: [TrainStatusRow] = []
             for number in lookup.trainNumbers {
@@ -151,7 +152,8 @@ struct ContentView: View {
                                 for: train,
                                 code: code,
                                 zone: lookup.timeZone,
-                                cache: &zoneCache
+                                cache: &zoneCache,
+                                staleness: staleness
                             )
                     if let row {
                         newRows.append(row)
@@ -174,11 +176,15 @@ struct ContentView: View {
         for train: Train,
         code stationCode: String,
         zone timeZone: TimeZone?,
-        cache zoneCache: inout [String: TimeZone?]
+        cache zoneCache: inout [String: TimeZone?],
+        staleness: [String: TimeInterval]
     ) async -> TrainStatusRow? {
         let leg = train.stations?.first { $0.code == stationCode }
         
-        guard !isStale(leg, timeZone: timeZone) else {
+        guard
+            !isStale(leg, timeZone: timeZone) &&
+            !isDataStale(train.trainID, staleness: staleness)
+        else {
             return nil
         }
         
