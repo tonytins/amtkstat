@@ -17,6 +17,18 @@ struct ContentView: View {
 
   var body: some View {
     VStack {
+      HStack {
+        Text("Station Code:")
+        TextField("e.g. ASD", text: $stationCode)
+          .frame(width: 100)
+
+        Button("Submit") {
+          Task {
+            await loadTrainStatus(forStationCode: normalizedStationCode)
+          }
+        }.disabled(normalizedStationCode.isEmpty)
+      }.padding(10)
+
       // Most popular Virtual Railfan stations
       HStack {
         Button("Ashland, VA") {
@@ -36,7 +48,7 @@ struct ContentView: View {
             await loadTrainStatus(forStationCode: "LAP")
           }
         }
-      }.padding(10)
+      }
 
       Table(rows) {
         TableColumn("Time", value: \TrainStatusRow.time)
@@ -69,7 +81,7 @@ struct ContentView: View {
       HStack {
         if let errorMessage {
           Text(errorMessage)
-        } else if !currentStation.isEmpty && !isLoading {
+        } else if !currentStation.isEmpty {
           Text(
             "It is \(amtrakDate.localTime(timeZone: localTimeZone)) at \(currentStation) station"
           )
@@ -82,23 +94,7 @@ struct ContentView: View {
         await loadTrainStatus(forStationCode: normalizedStationCode)
       }
     }.overlay(alignment: .topTrailing) {
-      HStack {
-        Text("Station Code:")
-        TextField("e.g. ASD", text: $stationCode)
-          .frame(width: 100)
-
-        Button("Submit") {
-          Task {
-            await loadTrainStatus(forStationCode: normalizedStationCode)
-          }
-        }.disabled(normalizedStationCode.isEmpty)
-      }.frame(alignment: .topTrailing)
-        .padding(10)
-
-    }
-    .overlay(alignment: .topLeading) {
       Text("Information by Amtraker")
-        .frame(alignment: .topLeading)
         .padding(10)
     }
   }
